@@ -3,9 +3,10 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
-from webdriver_manager.chrome import ChromeDriverManager
 import time
 from datetime import datetime
+import os
+import stat
 
 
 def fill_google_form(work_done):
@@ -14,8 +15,15 @@ def fill_google_form(work_done):
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
 
+    # Path to the ChromeDriver
+    chrome_driver_path = os.path.join('drivers', 'chromedriver')
+
+    # Ensure the ChromeDriver is executable
+    st = os.stat(chrome_driver_path)
+    os.chmod(chrome_driver_path, st.st_mode | stat.S_IEXEC)
+
     # Initialize the Chrome driver
-    service = Service(ChromeDriverManager().install())
+    service = Service(executable_path=chrome_driver_path)
     web = webdriver.Chrome(service=service, options=chrome_options)
 
     web.get('https://forms.gle/eeGSVR2UojvDpFTYA')
