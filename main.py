@@ -23,7 +23,7 @@ def fill_google_form(work_done):
     os.chmod(chrome_driver_path, st.st_mode | stat.S_IEXEC)
 
     # Initialize the Chrome driver
-    service = Service(executable_path=chrome_driver_path)
+    service = Service(executable_path='chromedriver')
     web = webdriver.Chrome(service=service, options=chrome_options)
 
     web.get('https://forms.gle/eeGSVR2UojvDpFTYA')
